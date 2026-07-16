@@ -189,7 +189,8 @@ document.getElementById('submitQuote').addEventListener('click', async function(
 
         // 4. Dispatch transaction payload request to endpoint
         // Paste your generated channel string endpoint address here:
-        const webhookUrl = 'YOUR_DISCORD_WEBHOOK_URL_HERE'; 
+        const webhookUrl = 'https://discord.com/api/webhooks/1526956420107341904/PzPw6NOzUoJjxeXDfBHcW75pdIOysD17GtRkOc23KRgGUzWgZmb5pOhY2gAO5CQxlyNx
+'; 
 
         const response = await fetch(webhookUrl, {
             method: 'POST',
