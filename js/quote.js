@@ -168,9 +168,6 @@ document.getElementById('submitQuote').addEventListener('click', async function(
                 .join('\n');
         }
         if (!itemsInfo) itemsInfo = 'No add-ons selected.';
-
-        // Assemble raw form submission multi-part payload required by Discord API
-        const formData = new FormData();
         
         const discordContent = `
 ========================================
@@ -199,8 +196,6 @@ ${itemsInfo}
 ========================================
         `;
 
-        formData.append('content', discordContent);
-
         // Webhook String Reconstruction (Safe against direct scrapers)
         const part1 = 'https://discord.com';
         const part2 = 'webhooks/';
@@ -209,10 +204,15 @@ ${itemsInfo}
         
         const webhookUrl = part1 + part2 + part3 + part4;
 
-        // Send directly to Discord channel via native browser fetch
+        // Send directly to Discord channel using native application/json text content mapping
         const response = await fetch(webhookUrl, {
             method: 'POST',
-            body: formData
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                content: discordContent
+            })
         });
 
         if (response.ok) {
@@ -221,7 +221,7 @@ ${itemsInfo}
             localStorage.removeItem("aduQuote");
             window.location.reload();
         } else {
-            throw new Error('Discord rejected the transmission packet.');
+            throw new Error('Discord rejected the transaction packet.');
         }
 
     } catch (error) {
