@@ -131,7 +131,7 @@ localStorage.setItem(id,el.value);
 // part two start 
 
 //====
-// ===============================
+/// ===============================
 // Send Quote Request to Discord
 // ===============================
 
@@ -157,48 +157,31 @@ document.getElementById('submitQuote').addEventListener('click', async function(
     this.disabled = true;
 
     try {
-        // Build printable element wrapper layout locally to bypass canvas errors
-        const printableElement = document.createElement('div');
-        printableElement.style.padding = '40px';
-        printableElement.style.fontFamily = 'Arial, sans-serif';
-        printableElement.innerHTML = `
-            <div style="border: 1px solid #ddd; padding: 30px; border-radius: 8px; background: #fff;">
-                <h2 style="color: #198754; border-bottom: 2px solid #198754; padding-bottom: 10px; margin-top: 0;">${quoteNo}</h2>
-                <p><strong>Customer Name:</strong> ${fullName}</p>
-                <p><strong>Company:</strong> ${company || 'N/A'}</p>
-                <p><strong>Email:</strong> ${email}</p>
-                <p><strong>Phone:</strong> ${phone || 'N/A'}</p>
-                <p><strong>WhatsApp:</strong> ${whatsapp || 'N/A'}</p>
-                <p><strong>Country:</strong> ${country || 'N/A'}</p>
-                <p><strong>Preferred Contact:</strong> ${contactMethod}</p>
-                <p><strong>Comments:</strong> ${comments || 'None'}</p>
-                <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
-                <h3>Order Configuration</h3>
-                <p>${document.getElementById("selectedModel") ? document.getElementById("selectedModel").innerHTML : 'None Selected'}</p>
-                <div>${document.getElementById("selectedItems") ? document.getElementById("selectedItems").innerHTML : ''}</div>
-                <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
-                <h1 style="color: #198754; text-align: right; margin: 0;">Total Amount: ${total}</h1>
-            </div>
-        `;
+        // Collect model and add-ons text data cleanly to send as text
+        const modelElement = document.getElementById("selectedModel");
+        const modelInfo = modelElement ? modelElement.innerText.replace(/\n/g, ' ') : 'None Selected';
+        
+        const itemsElement = document.getElementById("selectedItems");
+        let itemsInfo = '';
+        if (itemsElement) {
+            // Extracts all lines of add-ons cleanly
+            itemsInfo = Array.from(itemsElement.querySelectorAll('.d-flex'))
+                .map(el => `• ${el.innerText.replace(/\n/g, ': ')}`)
+                .join('\n');
+        }
+        if (!itemsInfo) itemsInfo = 'No add-ons selected.';
 
-        const opt = {
-            margin:       0.5,
-            filename:     `${quoteNo}.pdf`,
-            image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { scale: 2, useCORS: false, logging: false },
-            jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
-        };
-
-        // 1. Generate PDF binary data blob content stream
-        const pdfBlob = await html2pdf().set(opt).from(printableElement).output('blob');
-
-        // 2. Assemble raw form submission multi-part payload required by Discord API
+        // Assemble raw form submission multi-part payload required by Discord API
         const formData = new FormData();
         
         const discordContent = `
-**New Quote Request Received!** 📩
+========================================
+📋 **NEW COTTAGE QUOTE REQUEST** 📋
+========================================
 • **Quote No:** ${quoteNo}
 • **Total Amount:** ${total}
+
+👤 **CUSTOMER PROFILE**
 • **Name:** ${fullName}
 • **Company:** ${company || 'N/A'}
 • **Email:** ${email}
@@ -206,21 +189,29 @@ document.getElementById('submitQuote').addEventListener('click', async function(
 • **WhatsApp:** ${whatsapp || 'N/A'}
 • **Country:** ${country || 'N/A'}
 • **Preferred Contact:** ${contactMethod}
-• **Comments:** ${comments || 'None'}
+
+🏡 **COTTAGE CONFIGURATION**
+• **Selected Model:** ${modelInfo}
+
+➕ **SELECTED ADD-ONS**
+${itemsInfo}
+
+💬 **COMMENTS / NOTES**
+"${comments || 'None'}"
+========================================
         `;
 
         formData.append('content', discordContent);
-        formData.append('files', pdfBlob, `${quoteNo}.pdf`);
 
-        // 3. Webhook String Reconstruction
-        const part1 = 'https://discord.com/api/';
+        // Webhook String Reconstruction
+        const part1 = 'https://discord.com';
         const part2 = 'webhooks/';
         const part3 = '1526956420107341904/';
         const part4 = 'PzPw6NOzUoJjxeXDfBHcW75pdIOysD17GtRkOc23KRgGUzWgZmb5pOhY2gAO5CQxlyNx';
         
         const webhookUrl = part1 + part2 + part3 + part4;
 
-        // 4. Send directly to Discord channel via native browser fetch
+        // Send directly to Discord channel via native browser fetch
         const response = await fetch(webhookUrl, {
             method: 'POST',
             body: formData
