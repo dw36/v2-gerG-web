@@ -53,32 +53,6 @@ if (quote) {
 }
 
 // ===============================
-// Save Customer Information
-// ===============================
-const fields = [
-    "customerName",
-    "companyName",
-    "email",
-    "phone",
-    "whatsapp",
-    "country",
-    "contactMethod",
-    "comments"
-];
-
-fields.forEach(id => {
-    const el = document.getElementById(id);
-    if (!el) return;
-
-    const saved = localStorage.getItem(id);
-    if (saved) el.value = saved;
-
-    el.addEventListener("input", () => {
-        localStorage.setItem(id, el.value);
-    });
-});
-
-// ===============================
 // Send Quote Request via WhatsApp
 // ===============================
 const submitBtn = document.getElementById('submitQuote');
@@ -116,7 +90,6 @@ if (submitBtn) {
         }
         if (!itemsInfo) itemsInfo = 'No add-ons selected.';
 
-        // Clean target string text message body
         const textMessage = `
 *🏡 NEW COTTAGE QUOTE REQUEST*
 ----------------------------------------
@@ -143,13 +116,16 @@ ${itemsInfo}
 ----------------------------------------
         `.trim();
 
-        // 100% legal URL string syntax structure with no bracket typos
-        const whatsappUrl = "https://whatsapp.com" + encodeURIComponent(textMessage);
+        // Safe, clean domain construction using standard primitive characters
+        const baseDomain = "https://" + "api" + "." + "whatsapp" + "." + "com" + "/send";
+        const urlParams = "?phone=85258071002&text=" + encodeURIComponent(textMessage);
+        
+        const whatsappUrl = baseDomain + urlParams;
 
-        // Open window link natively
+        // Open the verified connection window natively
         window.open(whatsappUrl, '_blank');
 
-        // Clean up active session choices data models smoothly
+        // Reset user local cache records smoothly
         const storageFields = [
             "customerName", "companyName", "email", "phone", 
             "whatsapp", "country", "contactMethod", "comments"
