@@ -83,7 +83,7 @@ fields.forEach(id => {
 // ===============================
 const submitBtn = document.getElementById('submitQuote');
 if (submitBtn) {
-    // We clone the button to strip away any old hidden html2pdf event listeners completely
+    // This strips away any lingering hidden events in the DOM
     const newSubmitBtn = submitBtn.cloneNode(true);
     submitBtn.parentNode.replaceChild(newSubmitBtn, submitBtn);
 
@@ -104,7 +104,6 @@ if (submitBtn) {
             return;
         }
 
-        // Collect cottage details
         const modelElement = document.getElementById("selectedModel");
         const modelInfo = modelElement ? modelElement.innerText.replace(/\n/g, ' ') : 'None Selected';
         
@@ -117,11 +116,9 @@ if (submitBtn) {
         }
         if (!itemsInfo) itemsInfo = 'No add-ons selected.';
 
-        // CONFIGURATION: Set your real phone number with country code (No spaces, no dashes, no + signs)
-        // Example: '15551234567' for USA or '49123456789' for Germany
+        // Formatted Hong Kong number (No plus sign, no spaces)
         const myPhoneNumber = "85258071002"; 
 
-        // Formulate a beautiful clean text message for WhatsApp text formatting
         const textMessage = `
 *🏡 NEW COTTAGE QUOTE REQUEST*
 ----------------------------------------
@@ -148,13 +145,12 @@ ${itemsInfo}
 ----------------------------------------
         `.trim();
 
-        // Generate the official WhatsApp API URL string link mapping path safely
         const whatsappUrl = `https://whatsapp.com{myPhoneNumber}&text=${encodeURIComponent(textMessage)}`;
 
-        // Open WhatsApp web or native desktop application interface instantly
+        // Open WhatsApp web or app link
         window.open(whatsappUrl, '_blank');
 
-        // Clear out the temporary storage records upon completion action
+        // Reset user choice data profiles upon submission completion
         fields.forEach(id => localStorage.removeItem(id));
         localStorage.removeItem("aduQuote");
         window.location.reload();
