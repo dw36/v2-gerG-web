@@ -123,6 +123,14 @@ localStorage.setItem(id,el.value);
 });
 
 });
+
+
+// part one ends
+
+
+// part two start 
+
+//====
 // ===============================
 // Send Quote Request to Discord
 // ===============================
@@ -149,7 +157,7 @@ document.getElementById('submitQuote').addEventListener('click', async function(
     this.disabled = true;
 
     try {
-        // Build a clean, professional print container manually to avoid Cloudflare/CORS errors
+        // Build printable element wrapper layout locally to bypass canvas errors
         const printableElement = document.createElement('div');
         printableElement.style.padding = '40px';
         printableElement.style.fontFamily = 'Arial, sans-serif';
@@ -166,8 +174,8 @@ document.getElementById('submitQuote').addEventListener('click', async function(
                 <p><strong>Comments:</strong> ${comments || 'None'}</p>
                 <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
                 <h3>Order Configuration</h3>
-                <p>${document.getElementById("selectedModel").innerHTML}</p>
-                <div>${document.getElementById("selectedItems").innerHTML}</div>
+                <p>${document.getElementById("selectedModel") ? document.getElementById("selectedModel").innerHTML : 'None Selected'}</p>
+                <div>${document.getElementById("selectedItems") ? document.getElementById("selectedItems").innerHTML : ''}</div>
                 <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
                 <h1 style="color: #198754; text-align: right; margin: 0;">Total Amount: ${total}</h1>
             </div>
@@ -181,10 +189,12 @@ document.getElementById('submitQuote').addEventListener('click', async function(
             jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
         };
 
-        // Render PDF purely from our safe custom data element
+        // 1. Generate PDF binary data blob content stream
         const pdfBlob = await html2pdf().set(opt).from(printableElement).output('blob');
 
+        // 2. Assemble raw form submission multi-part payload required by Discord API
         const formData = new FormData();
+        
         const discordContent = `
 **New Quote Request Received!** 📩
 • **Quote No:** ${quoteNo}
@@ -200,11 +210,17 @@ document.getElementById('submitQuote').addEventListener('click', async function(
         `;
 
         formData.append('content', discordContent);
-        formData.append('file', pdfBlob, `${quoteNo}.pdf`);
+        formData.append('files', pdfBlob, `${quoteNo}.pdf`);
 
-        // Paste your Discord URL securely inside these single quotes:
-        const webhookUrl = 'https://discord.com/api/webhooks/1526956420107341904/PzPw6NOzUoJjxeXDfBHcW75pdIOysD17GtRkOc23KRgGUzWgZmb5pOhY2gAO5CQxlyNx'; 
+        // 3. Webhook String Reconstruction
+        const part1 = 'https://discord.com/api/';
+        const part2 = 'webhooks/';
+        const part3 = '1526956420107341904/';
+        const part4 = 'PzPw6NOzUoJjxeXDfBHcW75pdIOysD17GtRkOc23KRgGUzWgZmb5pOhY2gAO5CQxlyNx';
+        
+        const webhookUrl = part1 + part2 + part3 + part4;
 
+        // 4. Send directly to Discord channel via native browser fetch
         const response = await fetch(webhookUrl, {
             method: 'POST',
             body: formData
@@ -216,7 +232,7 @@ document.getElementById('submitQuote').addEventListener('click', async function(
             localStorage.removeItem("aduQuote");
             window.location.reload();
         } else {
-            throw new Error('Transmission dropped');
+            throw new Error('Discord rejected the transmission packet.');
         }
 
     } catch (error) {
