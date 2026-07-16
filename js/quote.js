@@ -152,19 +152,27 @@ document.getElementById('submitQuote').addEventListener('click', async function(
     this.disabled = true;
 
     try {
-        // 2. Locate target element container to build the document
-        // Selects the main interactive grid element container containing the quote
-        const element = document.querySelector('section.py-5'); 
+        // 2. Select ONLY the Quotation Summary container card
+        // This stops html2pdf from checking outside files and throwing a server error
+        const element = document.querySelector('.col-lg-5 .card'); 
         
+        if (!element) {
+            throw new Error('Quotation Summary container element not found.');
+        }
+
         const opt = {
-            margin:       0.5,
+            margin:       [0.5, 0.5, 0.5, 0.5],
             filename:     `${quoteNo}.pdf`,
-            image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { scale: 2, useCORS: true },
+            image:        { type: 'jpeg', quality: 0.95 },
+            html2canvas:  { 
+                scale: 2, 
+                useCORS: false, // Disables external server cross-origin fetches
+                logging: false 
+            },
             jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
         };
 
-        // Generates binary data stream blob via your html2pdf client dependency
+        // Generates binary data stream blob safely on your local client
         const pdfBlob = await html2pdf().set(opt).from(element).output('blob');
 
         // 3. Assemble multiform body wrapper payload for Discord asset transmission
@@ -188,9 +196,8 @@ document.getElementById('submitQuote').addEventListener('click', async function(
         formData.append('file', pdfBlob, `${quoteNo}.pdf`);
 
         // 4. Dispatch transaction payload request to endpoint
-        // Paste your generated channel string endpoint address here:
-        const webhookUrl = 'https://discord.com/api/webhooks/1526956420107341904/PzPw6NOzUoJjxeXDfBHcW75pdIOysD17GtRkOc23KRgGUzWgZmb5pOhY2gAO5CQxlyNx
-'; 
+        // Paste your generated channel webhook string address between the single quotes:
+        const webhookUrl = 'https://discord.com/api/webhooks/1526956420107341904/PzPw6NOzUoJjxeXDfBHcW75pdIOysD17GtRkOc23KRgGUzWgZmb5pOhY2gAO5CQxlyNx'; 
 
         const response = await fetch(webhookUrl, {
             method: 'POST',
@@ -202,6 +209,7 @@ document.getElementById('submitQuote').addEventListener('click', async function(
             // Clears fields persistence locally if submit is successful
             fields.forEach(id => localStorage.removeItem(id));
             localStorage.removeItem("aduQuote");
+            window.location.reload(); // Reloads the page to clear out the visual inputs
         } else {
             throw new Error('Server transmission dropped');
         }
