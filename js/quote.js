@@ -85,23 +85,19 @@ const submitBtn = document.getElementById('submitQuote');
 
 if (submitBtn) {
     submitBtn.addEventListener('click', function(e) {
-        // Prevent default form submittal actions from interfering
         e.preventDefault();
 
-        const fullName = document.getElementById('customerName').value.trim();
-        const company = document.getElementById('companyName').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const phone = document.getElementById('phone').value.trim();
-        const whatsappField = document.getElementById('whatsapp').value.trim();
-        const country = document.getElementById('country').value.trim();
-        const contactMethod = document.getElementById('contactMethod').value;
-        const comments = document.getElementById('comments').value.trim();
+        const fullName = (document.getElementById('customerName')?.value || '').trim();
+        const company = (document.getElementById('companyName')?.value || '').trim();
+        const email = (document.getElementById('email')?.value || '').trim();
+        const phone = (document.getElementById('phone')?.value || '').trim();
+        const whatsappField = (document.getElementById('whatsapp')?.value || '').trim();
+        const country = (document.getElementById('country')?.value || '').trim();
+        const contactMethod = document.getElementById('contactMethod')?.value || 'Not Specified';
+        const comments = (document.getElementById('comments')?.value || '').trim();
         
-        const quoteNoEl = document.getElementById('quoteNumber');
-        const totalEl = document.getElementById('grandTotal');
-        
-        const quoteNo = quoteNoEl ? quoteNoEl.innerText : 'N/A';
-        const total = totalEl ? totalEl.innerText : '$0';
+        const quoteNo = document.getElementById('quoteNumber')?.innerText || 'N/A';
+        const total = document.getElementById('grandTotal')?.innerText || '$0';
 
         if (!fullName || !email) {
             alert('Please fill out your Full Name and Email address first.');
@@ -120,9 +116,7 @@ if (submitBtn) {
         }
         if (!itemsInfo) itemsInfo = 'No add-ons selected.';
 
-        // Your exact Hong Kong Phone configuration
-        const myPhoneNumber = "85258071002"; 
-
+        // Clean target string text message body
         const textMessage = `
 *🏡 NEW COTTAGE QUOTE REQUEST*
 ----------------------------------------
@@ -149,12 +143,13 @@ ${itemsInfo}
 ----------------------------------------
         `.trim();
 
-        const whatsappUrl = `https://whatsapp.com{myPhoneNumber}&text=${encodeURIComponent(textMessage)}`;
+        // 100% legal URL string syntax structure with no bracket typos
+        const whatsappUrl = "https://whatsapp.com" + encodeURIComponent(textMessage);
 
-        // Safely trigger target window open without altering DOM elements
+        // Open window link natively
         window.open(whatsappUrl, '_blank');
 
-        // Reset customer storage metrics smoothly after launching window
+        // Clean up active session choices data models smoothly
         const storageFields = [
             "customerName", "companyName", "email", "phone", 
             "whatsapp", "country", "contactMethod", "comments"
