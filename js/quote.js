@@ -79,16 +79,20 @@ fields.forEach(id => {
 });
 
 // ===============================
-// Send Quote Request to Discord (Plain Text)
+// Send Quote Request via WhatsApp
 // ===============================
 const submitBtn = document.getElementById('submitQuote');
 if (submitBtn) {
-    submitBtn.addEventListener('click', async function() {
+    // We clone the button to strip away any old hidden html2pdf event listeners completely
+    const newSubmitBtn = submitBtn.cloneNode(true);
+    submitBtn.parentNode.replaceChild(newSubmitBtn, submitBtn);
+
+    newSubmitBtn.addEventListener('click', function() {
         const fullName = document.getElementById('customerName').value.trim();
         const company = document.getElementById('companyName').value.trim();
         const email = document.getElementById('email').value.trim();
         const phone = document.getElementById('phone').value.trim();
-        const whatsapp = document.getElementById('whatsapp').value.trim();
+        const whatsappField = document.getElementById('whatsapp').value.trim();
         const country = document.getElementById('country').value.trim();
         const contactMethod = document.getElementById('contactMethod').value;
         const comments = document.getElementById('comments').value.trim();
@@ -96,82 +100,63 @@ if (submitBtn) {
         const total = document.getElementById('grandTotal').innerText;
 
         if (!fullName || !email) {
-            alert('Please fill out your Full Name and Email address.');
+            alert('Please fill out your Full Name and Email address first.');
             return;
         }
 
-        const originalText = this.innerHTML;
-        this.innerText = '⌛ Sending Request...';
-        this.disabled = true;
+        // Collect cottage details
+        const modelElement = document.getElementById("selectedModel");
+        const modelInfo = modelElement ? modelElement.innerText.replace(/\n/g, ' ') : 'None Selected';
+        
+        const itemsElement = document.getElementById("selectedItems");
+        let itemsInfo = '';
+        if (itemsElement) {
+            itemsInfo = Array.from(itemsElement.querySelectorAll('.d-flex'))
+                .map(el => `• ${el.innerText.replace(/\n/g, ': ')}`)
+                .join('\n');
+        }
+        if (!itemsInfo) itemsInfo = 'No add-ons selected.';
 
-        try {
-            const modelElement = document.getElementById("selectedModel");
-            const modelInfo = modelElement ? modelElement.innerText.replace(/\n/g, ' ') : 'None Selected';
-            
-            const itemsElement = document.getElementById("selectedItems");
-            let itemsInfo = '';
-            if (itemsElement) {
-                itemsInfo = Array.from(itemsElement.querySelectorAll('.d-flex'))
-                    .map(el => `• ${el.innerText.replace(/\n/g, ': ')}`)
-                    .join('\n');
-            }
-            if (!itemsInfo) itemsInfo = 'No add-ons selected.';
-            
-            const messageBody = `
-========================================
-📋 **NEW COTTAGE QUOTE REQUEST** 📋
-========================================
-• **Quote No:** ${quoteNo}
-• **Total Amount:** ${total}
+        // CONFIGURATION: Set your real phone number with country code (No spaces, no dashes, no + signs)
+        // Example: '15551234567' for USA or '49123456789' for Germany
+        const myPhoneNumber = "85258071002"; 
 
-👤 **CUSTOMER PROFILE**
-• **Name:** ${fullName}
-• **Company:** ${company || 'N/A'}
-• **Email:** ${email}
-• **Phone:** ${phone || 'N/A'}
-• **WhatsApp:** ${whatsapp || 'N/A'}
-• **Country:** ${country || 'N/A'}
-• **Preferred Contact:** ${contactMethod}
+        // Formulate a beautiful clean text message for WhatsApp text formatting
+        const textMessage = `
+*🏡 NEW COTTAGE QUOTE REQUEST*
+----------------------------------------
+*Quote No:* ${quoteNo}
+*Total Amount:* ${total}
 
-🏡 **COTTAGE CONFIGURATION**
-• **Selected Model:** ${modelInfo}
+*👤 CUSTOMER PROFILE:*
+• *Name:* ${fullName}
+• *Company:* ${company || 'N/A'}
+• *Email:* ${email}
+• *Phone:* ${phone || 'N/A'}
+• *WhatsApp:* ${whatsappField || 'N/A'}
+• *Country:* ${country || 'N/A'}
+• *Preferred Contact:* ${contactMethod}
 
-➕ **SELECTED ADD-ONS**
+*🏠 CONFIGURATION:*
+• *Selected Model:* ${modelInfo}
+
+*➕ SELECTED ADD-ONS:*
 ${itemsInfo}
 
-💬 **COMMENTS / NOTES**
+*💬 COMMENTS:*
 "${comments || 'None'}"
-========================================
-            `;
+----------------------------------------
+        `.trim();
 
-            const part1 = 'https://discord.com';
-            const part2 = 'webhooks/';
-            const part3 = '1526956420107341904/';
-            const part4 = 'PzPw6NOzUoJjxeXDfBHcW75pdIOysD17GtRkOc23KRgGUzWgZmb5pOhY2gAO5CQxlyNx';
-            
-            const webhookUrl = part1 + part2 + part3 + part4;
+        // Generate the official WhatsApp API URL string link mapping path safely
+        const whatsappUrl = `https://whatsapp.com{myPhoneNumber}&text=${encodeURIComponent(textMessage)}`;
 
-            const response = await fetch(webhookUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ content: messageBody })
-            });
+        // Open WhatsApp web or native desktop application interface instantly
+        window.open(whatsappUrl, '_blank');
 
-            if (response.ok) {
-                alert('Your quote request was successfully submitted!');
-                fields.forEach(id => localStorage.removeItem(id));
-                localStorage.removeItem("aduQuote");
-                window.location.reload();
-            } else {
-                throw new Error('Discord rejected the packet.');
-            }
-
-        } catch (error) {
-            console.error('Submission error:', error);
-            alert('Something went wrong while sending your request. Please try again.');
-        } finally {
-            this.innerHTML = originalText;
-            this.disabled = false;
-        }
+        // Clear out the temporary storage records upon completion action
+        fields.forEach(id => localStorage.removeItem(id));
+        localStorage.removeItem("aduQuote");
+        window.location.reload();
     });
 }
