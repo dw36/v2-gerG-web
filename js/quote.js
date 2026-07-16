@@ -128,7 +128,6 @@ localStorage.setItem(id,el.value);
 // ===============================
 
 document.getElementById('submitQuote').addEventListener('click', async function() {
-    // 1. Collect form data values
     const fullName = document.getElementById('customerName').value.trim();
     const company = document.getElementById('companyName').value.trim();
     const email = document.getElementById('email').value.trim();
@@ -140,44 +139,52 @@ document.getElementById('submitQuote').addEventListener('click', async function(
     const quoteNo = document.getElementById('quoteNumber').innerText;
     const total = document.getElementById('grandTotal').innerText;
 
-    // Basic required validation check
     if (!fullName || !email) {
         alert('Please fill out your Full Name and Email address.');
         return;
     }
 
-    // Change button visual state during processing
     const originalText = this.innerHTML;
     this.innerText = '⌛ Sending Request...';
     this.disabled = true;
 
     try {
-        // 2. Select ONLY the Quotation Summary container card
-        // This stops html2pdf from checking outside files and throwing a server error
-        const element = document.querySelector('.col-lg-5 .card'); 
-        
-        if (!element) {
-            throw new Error('Quotation Summary container element not found.');
-        }
+        // Build a clean, professional print container manually to avoid Cloudflare/CORS errors
+        const printableElement = document.createElement('div');
+        printableElement.style.padding = '40px';
+        printableElement.style.fontFamily = 'Arial, sans-serif';
+        printableElement.innerHTML = `
+            <div style="border: 1px solid #ddd; padding: 30px; border-radius: 8px; background: #fff;">
+                <h2 style="color: #198754; border-bottom: 2px solid #198754; padding-bottom: 10px; margin-top: 0;">${quoteNo}</h2>
+                <p><strong>Customer Name:</strong> ${fullName}</p>
+                <p><strong>Company:</strong> ${company || 'N/A'}</p>
+                <p><strong>Email:</strong> ${email}</p>
+                <p><strong>Phone:</strong> ${phone || 'N/A'}</p>
+                <p><strong>WhatsApp:</strong> ${whatsapp || 'N/A'}</p>
+                <p><strong>Country:</strong> ${country || 'N/A'}</p>
+                <p><strong>Preferred Contact:</strong> ${contactMethod}</p>
+                <p><strong>Comments:</strong> ${comments || 'None'}</p>
+                <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+                <h3>Order Configuration</h3>
+                <p>${document.getElementById("selectedModel").innerHTML}</p>
+                <div>${document.getElementById("selectedItems").innerHTML}</div>
+                <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+                <h1 style="color: #198754; text-align: right; margin: 0;">Total Amount: ${total}</h1>
+            </div>
+        `;
 
         const opt = {
-            margin:       [0.5, 0.5, 0.5, 0.5],
+            margin:       0.5,
             filename:     `${quoteNo}.pdf`,
-            image:        { type: 'jpeg', quality: 0.95 },
-            html2canvas:  { 
-                scale: 2, 
-                useCORS: false, // Disables external server cross-origin fetches
-                logging: false 
-            },
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2, useCORS: false, logging: false },
             jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
         };
 
-        // Generates binary data stream blob safely on your local client
-        const pdfBlob = await html2pdf().set(opt).from(element).output('blob');
+        // Render PDF purely from our safe custom data element
+        const pdfBlob = await html2pdf().set(opt).from(printableElement).output('blob');
 
-        // 3. Assemble multiform body wrapper payload for Discord asset transmission
         const formData = new FormData();
-        
         const discordContent = `
 **New Quote Request Received!** 📩
 • **Quote No:** ${quoteNo}
@@ -195,8 +202,7 @@ document.getElementById('submitQuote').addEventListener('click', async function(
         formData.append('content', discordContent);
         formData.append('file', pdfBlob, `${quoteNo}.pdf`);
 
-        // 4. Dispatch transaction payload request to endpoint
-        // Paste your generated channel webhook string address between the single quotes:
+        // Paste your Discord URL securely inside these single quotes:
         const webhookUrl = 'https://discord.com/api/webhooks/1526956420107341904/PzPw6NOzUoJjxeXDfBHcW75pdIOysD17GtRkOc23KRgGUzWgZmb5pOhY2gAO5CQxlyNx'; 
 
         const response = await fetch(webhookUrl, {
@@ -206,19 +212,17 @@ document.getElementById('submitQuote').addEventListener('click', async function(
 
         if (response.ok) {
             alert('Your quote request was successfully submitted!');
-            // Clears fields persistence locally if submit is successful
             fields.forEach(id => localStorage.removeItem(id));
             localStorage.removeItem("aduQuote");
-            window.location.reload(); // Reloads the page to clear out the visual inputs
+            window.location.reload();
         } else {
-            throw new Error('Server transmission dropped');
+            throw new Error('Transmission dropped');
         }
 
     } catch (error) {
-        console.error('Error handling workflow execution:', error);
+        console.error('Submission processing error:', error);
         alert('Something went wrong while sending your request. Please try again.');
     } finally {
-        // Revert element styles back to active state
         this.innerHTML = originalText;
         this.disabled = false;
     }
