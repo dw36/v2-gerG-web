@@ -125,13 +125,12 @@ localStorage.setItem(id,el.value);
 });
 
 
-// part one ends
+// part one ends 
 
 
-// part two start 
+// part two starts
 
-//====
-/// ===============================
+// ===============================
 // Send Quote Request to Discord
 // ===============================
 
@@ -164,7 +163,6 @@ document.getElementById('submitQuote').addEventListener('click', async function(
         const itemsElement = document.getElementById("selectedItems");
         let itemsInfo = '';
         if (itemsElement) {
-            // Extracts all lines of add-ons cleanly
             itemsInfo = Array.from(itemsElement.querySelectorAll('.d-flex'))
                 .map(el => `• ${el.innerText.replace(/\n/g, ': ')}`)
                 .join('\n');
@@ -203,7 +201,7 @@ ${itemsInfo}
 
         formData.append('content', discordContent);
 
-        // Webhook String Reconstruction
+        // Webhook String Reconstruction (Safe against direct scrapers)
         const part1 = 'https://discord.com';
         const part2 = 'webhooks/';
         const part3 = '1526956420107341904/';
