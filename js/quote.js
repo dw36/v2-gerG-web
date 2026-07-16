@@ -82,12 +82,12 @@ fields.forEach(id => {
 // Send Quote Request via WhatsApp
 // ===============================
 const submitBtn = document.getElementById('submitQuote');
-if (submitBtn) {
-    // This strips away any lingering hidden events in the DOM
-    const newSubmitBtn = submitBtn.cloneNode(true);
-    submitBtn.parentNode.replaceChild(newSubmitBtn, submitBtn);
 
-    newSubmitBtn.addEventListener('click', function() {
+if (submitBtn) {
+    submitBtn.addEventListener('click', function(e) {
+        // Prevent default form submittal actions from interfering
+        e.preventDefault();
+
         const fullName = document.getElementById('customerName').value.trim();
         const company = document.getElementById('companyName').value.trim();
         const email = document.getElementById('email').value.trim();
@@ -96,8 +96,12 @@ if (submitBtn) {
         const country = document.getElementById('country').value.trim();
         const contactMethod = document.getElementById('contactMethod').value;
         const comments = document.getElementById('comments').value.trim();
-        const quoteNo = document.getElementById('quoteNumber').innerText;
-        const total = document.getElementById('grandTotal').innerText;
+        
+        const quoteNoEl = document.getElementById('quoteNumber');
+        const totalEl = document.getElementById('grandTotal');
+        
+        const quoteNo = quoteNoEl ? quoteNoEl.innerText : 'N/A';
+        const total = totalEl ? totalEl.innerText : '$0';
 
         if (!fullName || !email) {
             alert('Please fill out your Full Name and Email address first.');
@@ -116,7 +120,7 @@ if (submitBtn) {
         }
         if (!itemsInfo) itemsInfo = 'No add-ons selected.';
 
-        // Formatted Hong Kong number (No plus sign, no spaces)
+        // Your exact Hong Kong Phone configuration
         const myPhoneNumber = "85258071002"; 
 
         const textMessage = `
@@ -147,12 +151,17 @@ ${itemsInfo}
 
         const whatsappUrl = `https://whatsapp.com{myPhoneNumber}&text=${encodeURIComponent(textMessage)}`;
 
-        // Open WhatsApp web or app link
+        // Safely trigger target window open without altering DOM elements
         window.open(whatsappUrl, '_blank');
 
-        // Reset user choice data profiles upon submission completion
-        fields.forEach(id => localStorage.removeItem(id));
+        // Reset customer storage metrics smoothly after launching window
+        const storageFields = [
+            "customerName", "companyName", "email", "phone", 
+            "whatsapp", "country", "contactMethod", "comments"
+        ];
+        storageFields.forEach(id => localStorage.removeItem(id));
         localStorage.removeItem("aduQuote");
+        
         window.location.reload();
     });
 }
