@@ -131,7 +131,7 @@ localStorage.setItem(id,el.value);
 // part two starts
 
 // ===============================
-// Send Quote Request to Discord
+// Send Quote Request to Discord (Plain Text)
 // ===============================
 
 document.getElementById('submitQuote').addEventListener('click', async function() {
@@ -156,7 +156,7 @@ document.getElementById('submitQuote').addEventListener('click', async function(
     this.disabled = true;
 
     try {
-        // Collect model and add-ons text data cleanly to send as text
+        // Collect model configuration text blocks cleanly
         const modelElement = document.getElementById("selectedModel");
         const modelInfo = modelElement ? modelElement.innerText.replace(/\n/g, ' ') : 'None Selected';
         
@@ -169,7 +169,8 @@ document.getElementById('submitQuote').addEventListener('click', async function(
         }
         if (!itemsInfo) itemsInfo = 'No add-ons selected.';
         
-        const discordContent = `
+        // Assemble the clean plain text layout template for Discord
+        const messageBody = `
 ========================================
 📋 **NEW COTTAGE QUOTE REQUEST** 📋
 ========================================
@@ -196,7 +197,7 @@ ${itemsInfo}
 ========================================
         `;
 
-        // Webhook String Reconstruction (Safe against direct scrapers)
+        // Split tracking tokens to block scrapers
         const part1 = 'https://discord.com';
         const part2 = 'webhooks/';
         const part3 = '1526956420107341904/';
@@ -204,14 +205,14 @@ ${itemsInfo}
         
         const webhookUrl = part1 + part2 + part3 + part4;
 
-        // Send directly to Discord channel using native application/json text content mapping
+        // Execute direct text transfer via plain string transmission
         const response = await fetch(webhookUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                content: discordContent
+                content: messageBody
             })
         });
 
@@ -221,7 +222,7 @@ ${itemsInfo}
             localStorage.removeItem("aduQuote");
             window.location.reload();
         } else {
-            throw new Error('Discord rejected the transaction packet.');
+            throw new Error('Endpoint transaction rejected.');
         }
 
     } catch (error) {
