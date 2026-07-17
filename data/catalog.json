@@ -101,9 +101,9 @@
         { "name": "Bathroom Vent Fan", "price": 29, "image": "1bmd-vent-01.jpg" },
         { "name": "Bathroom Mirror Light", "price": 99, "image": "mirrorNoFr-lt-restRm-24in.jpg" },
         { "name": "Dishwasher", "price": 819, "image": "1bmd-dishW-01-670b660b885.jpg" },
-        { "name": "Hair Dryer", "price": 28, "image": "hair-dryer.jpg" },
+        { "name": "Hair Dryer", "price": 28, "image": "hairDryer-universal.jpg" },
         { "name": "Vacuum Robot", "price": 535, "image": "vacRobot-622a.jpg" },
-        { "name": "Sound Bar", "price": 99, "image": "soundbar.jpg" }
+        { "name": "Sound Bar", "price": 99, "image": "soundBar-universal.jpg" }
       ]
     },
     {
