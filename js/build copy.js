@@ -76,25 +76,7 @@ function buildProducts() {
                 </div>
                 <div class="row">
         `;
-        
-        let visibleItemsCount = 0;
-
         category.items.forEach(item => {
-            // 🚀 DYNAMIC SHIPPING FILTER RULE
-            if (category.title === "Shipping") {
-                if (selectedModel && selectedModel.name) {
-                    const is1BRSelected = selectedModel.name.includes("1 BR") && item.name.includes("1 BR");
-                    const is2BRSelected = selectedModel.name.includes("2 BR") && item.name.includes("2 BR");
-                    const is3BRSelected = selectedModel.name.includes("3 BR") && item.name.includes("3 BR");
-                    
-                    // Skip rendering this item if it doesn't match the selected cottage layout type
-                    if (!is1BRSelected && !is2BRSelected && !is3BRSelected) {
-                        return; 
-                    }
-                }
-            }
-
-            visibleItemsCount++;
             const isChecked = selectedItems.some(i => i.name === item.name);
             html += `
             <div class="col-md-6 col-xl-4 mb-4 product-card">
@@ -111,13 +93,8 @@ function buildProducts() {
                 </div>
             </div>`;
         });
-        
         html += `</div></div></div>`;
-        
-        // Only append the category container row if it contains visible elements
-        if (visibleItemsCount > 0) {
-            productArea.innerHTML += html;
-        }
+        productArea.innerHTML += html;
     });
     setupAddons();
 }
@@ -256,7 +233,6 @@ function loadQuoteVisuals() {
         }
     });
     
-    // Re-render checked status dynamically ensuring shipping updates cleanly
     document.querySelectorAll(".addon").forEach(box => {
         box.checked = selectedItems.some(i => i.name === box.dataset.name);
     });

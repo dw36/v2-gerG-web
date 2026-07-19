@@ -1,11 +1,11 @@
 # ADU Build Cottage
 
-## Version 1 Features
+## Version 2 Features
 
 ✅ Home Page
 
 - Hero section
-- Three Cottage Models
+- Three Cottage Size
 - Shipping Promotion
 - Call-to-action
 
@@ -42,17 +42,17 @@
 
 ## Cottage Packages
 
-### The Canvas
-
-$16,900
-
-### The Equipped
-
-$22,700
-
-### The Turnkey
+### 1 BR 300sqft
 
 $24,970
+
+### 2 BR 600sqft
+
+$41,647
+
+### 3 BR 900sqft
+
+$59,873
 
 ---
 

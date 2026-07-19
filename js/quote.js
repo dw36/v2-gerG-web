@@ -3,20 +3,20 @@
 // ============================================================
 // Change these file names to match the exact names of your images inside your folder!
 const cottageRenderings = {
-    "The Canvas": {
-        title: "The Canvas Configurations",
+    "1 BR 300sqft": {
+        title: "1 BR 300sqft Configurations",
         exterior: "images/canvas-exterior.jpg",
         interior: "images/canvas-skeleton.jpg",
         layout:   "images/canvas-blueprint.jpg"
     },
-    "The Equipped": {
-        title: "The Equipped Configurations",
+    "2 BR 600sqft": {
+        title: "2 BR 600sqft Configurations",
         exterior: "images/equipped-exterior.jpg",
         interior: "images/equipped-skeleton.jpg",
         layout:   "images/equipped-blueprint.jpg"
     },
-    "The Turnkey": {
-        title: "The Turnkey Configurations",
+    "3 BR 900sqft": {
+        title: "3 BR 900sqft Configurations",
         exterior: "images/turnkey-exterior.jpg",
         interior: "images/turnkey-skeleton.jpg",
         layout:   "images/turnkey-blueprint.jpg"
