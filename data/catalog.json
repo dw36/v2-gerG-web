@@ -99,7 +99,7 @@
       "description": "Move-in ready with premium finishes.",
       "includes": [
         { "name": "Water Heater", "price": 750 },
-        { "name": "AC (Living Room) 18k BTU", "price": 100 },
+        { "name": "AC (Living Room) 18k BTU", "price": 1900 },
         { "name": "AC (Master BR) 9k BTU", "price": 700 },
         { "name": "AC (Guest BR A) 9k BTU", "price": 700 },
         { "name": "AC (Guest BR B) 9k BTU", "price": 700 },
