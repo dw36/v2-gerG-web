@@ -1,11 +1,11 @@
 # ADU Build Cottage
 
-## Version 2 Features
+## Version 1 Features
 
 ✅ Home Page
 
 - Hero section
-- Three Cottage Size
+- Three Cottage Models
 - Shipping Promotion
 - Call-to-action
 

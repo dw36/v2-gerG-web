@@ -19,8 +19,32 @@ fetch("data/catalog.json")
 .then(data => {
     catalog = data;
     
+    // ===============================
+// PRESELECT MODEL FROM INDEX
+// ===============================
+const preselected = localStorage.getItem("selectedModel");
+
+if (preselected) {
+
+    selectedModel = JSON.parse(preselected);
+
+    // one-time use
+    localStorage.removeItem("selectedModel");
+
+    const matchingModel = catalog.models.find(
+        m => m.name === selectedModel.name
+    );
+
+    if (matchingModel && matchingModel.includes) {
+        selectedItems = [...matchingModel.includes];
+    }
+
+}
+    
     // INITIAL RUN STATE SETUP: Check if a quote is already cached in localStorage first
-    const saved = localStorage.getItem("aduQuote");
+    const saved = selectedModel
+    ? null
+    : localStorage.getItem("aduQuote");
     const defaultRadio = document.querySelector(".model-option:checked");
     let currentModelName = defaultRadio ? defaultRadio.dataset.name : null;
 
