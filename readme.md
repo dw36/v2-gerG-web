@@ -58,7 +58,7 @@ $58,300
 
 ## Shipping Promotion
 
-Until July 21
+Until July 30
 
 ---
 
