@@ -170,7 +170,7 @@
         { "name": "AC (Living Room) 18k BTU", "price": 1900, "image": "AC.jpg" },
         { "name": "AC (Master BR) 9k BTU", "price": 700, "image": "AC.jpg" },
         { "name": "AC (Guest BR A) 9k BTU", "price": 700, "image": "AC.jpg" },
-        { "name": "AC (Guest BR B) 9k BTU", "price": 700, "image": "Ac.jpg" },
+        { "name": "AC (Guest BR B) 9k BTU", "price": 700, "image": "AC.jpg" },
         { "name": "Fridge (10 cu. ft.)", "price": 971, "image": "fridge-10cu.jpg" },
         { "name": "Fridge (22 cu. ft.)", "price": 1000, "image": "fridge-22cu.jpg" },
         { "name": "Dryer", "price": 657, "image": "1bmd-Dryer-9kg.jpg" },
