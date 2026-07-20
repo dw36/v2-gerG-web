@@ -17,7 +17,7 @@
       "description": "Perfect for customers wanting an affordable modern cottage.",
       "includes": [
         { "name": "Water Heater", "price": 750 },
-        { "name": "AC (Living Room) 18k BTU", "price": 2050 },
+        { "name": "AC (Living Room) 18k BTU", "price": 1950 },
         { "name": "AC (Master BR) 9k BTU", "price": 650 },
         { "name": "Fridge (10 cu. ft.)", "price": 971 },
         { "name": "Washer", "price": 519 },
@@ -54,7 +54,7 @@
       "description": "Our most popular package with additional built-in features.",
       "includes": [
        { "name": "Water Heater", "price": 750 },
-        { "name": "AC (Living Room) 18k BTU", "price": 2050 },
+        { "name": "AC (Living Room) 18k BTU", "price": 1950 },
         { "name": "AC (Master BR) 9k BTU", "price": 650 },
         { "name": "AC (Guest BR A) 9k BTU", "price": 650 },
         { "name": "Fridge (22 cu. ft.)", "price": 1000 },
@@ -70,7 +70,7 @@
         { "name": "Master Vent", "price": 29 },
         { "name": "Master BR Ceiling Light", "price": 19 },
         { "name": "2nd BR Ceiling Light", "price": 19 },
-        { "name": "King Bedding Set", "price": 265 },
+        { "name": "King Bedding Set", "price": 260 },
         { "name": "Queen Bedding Set", "price": 255 },
         { "name": "Wall Art", "price": 99 },
         { "name": "King Mattress", "price": 199 },
@@ -99,7 +99,7 @@
       "description": "Move-in ready with premium finishes.",
       "includes": [
         { "name": "Water Heater", "price": 750 },
-        { "name": "AC (Living Room) 18k BTU", "price": 2050 },
+        { "name": "AC (Living Room) 18k BTU", "price": 1950 },
         { "name": "AC (Master BR) 9k BTU", "price": 650 },
         { "name": "AC (Guest BR A) 9k BTU", "price": 650 },
         { "name": "AC (Guest BR B) 9k BTU", "price": 650 },
@@ -120,7 +120,7 @@
         { "name": "Master BR Ceiling Light", "price": 19 },
         { "name": "2nd BR Ceiling Light", "price": 19 },
         { "name": "3rd BR Ceiling Light", "price": 19 },
-        { "name": "King Bedding Set", "price": 265 },
+        { "name": "King Bedding Set", "price": 260 },
         { "name": "Queen Bedding Set", "price": 255 },
         { "name": "Queen Bedding Set", "price": 255 },
         { "name": "Wall Art", "price": 99 },
@@ -167,7 +167,7 @@
       "folder": "electrical",
       "items": [
         { "name": "Water Heater", "price": 750, "image": "1bmd-heater.jpg" },
-        { "name": "AC (Living Room) 18k BTU", "price": 2050, "image": "AC.jpg" },
+        { "name": "AC (Living Room) 18k BTU", "price": 1950, "image": "AC.jpg" },
         { "name": "AC (Master BR) 9k BTU", "price": 650, "image": "AC.jpg" },
         { "name": "AC (Guest BR A) 9k BTU", "price": 650, "image": "AC.jpg" },
         { "name": "AC (Guest BR B) 9k BTU", "price": 650, "image": "AC.jpg" },
@@ -202,7 +202,7 @@
       "title": "Furniture & Decor",
       "folder": "furniture",
       "items": [
-        { "name": "King Bedding Set", "price": 265, "image": "bedding-univr-01.jpg" },
+        { "name": "King Bedding Set", "price": 260, "image": "bedding-univr-01.jpg" },
         { "name": "Queen Bedding Set", "price": 255, "image": "bedding-univr-01.jpg" },
         { "name": "King Mattress", "price": 199, "image": "mattress-univr-01.jpg" },
         { "name": "Queen Mattress", "price": 189, "image": "mattress-univr-01.jpg" },
