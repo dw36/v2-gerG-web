@@ -138,10 +138,10 @@
         { "name": "6ft Closet Organizer System", "price": 79 },
         { "name": "Master Nightstand", "price": 59 },
         { "name": "2nd Nightstand", "price": 59 },
-        { "name": "3th Nightstand", "price": 59 },
+        { "name": "3rd Nightstand", "price": 59 },
         { "name": "Master Pillows", "price": 55 },
         { "name": "2nd Pillows", "price": 55 },
-        { "name": "3th Pillows", "price": 55 },
+        { "name": "3rd Pillows", "price": 55 },
         { "name": "Master Shower Set", "price": 75 },
         { "name": "2nd Shower Set", "price": 75 },
         { "name": "Kitchen Sink Faucet", "price": 43 },
@@ -217,10 +217,10 @@
         { "name": "6ft Closet Organizer System", "price": 79, "image": "1bmd-closetOrganizer.jpg" },
         { "name": "Master Nightstand", "price": 59, "image": "niStand-univr-01.jpg" },
         { "name": "2nd Nightstand", "price": 59, "image": "niStand-univr-01.jpg" },
-        { "name": "3th Nightstand", "price": 59, "image": "niStand-univr-01.jpg" },
+        { "name": "3rd Nightstand", "price": 59, "image": "niStand-univr-01.jpg" },
         { "name": "Master Pillows", "price": 55, "image": "pilow-univr-01.jpg" },
         { "name": "2nd Pillows", "price": 55, "image": "pilow-univr-01.jpg" },
-        { "name": "3th Pillows", "price": 55, "image": "pilow-univr-01.jpg" }
+        { "name": "3rd Pillows", "price": 55, "image": "pilow-univr-01.jpg" }
       ]
     },
     {
