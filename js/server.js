@@ -36,7 +36,7 @@ const doc=new PDFDocument();
 
 doc.pipe(fs.createWriteStream(pdfPath));
 
-doc.fontSize(24).text("ADU Build Cottage");
+doc.fontSize(24).text("ARI Cottage");
 
 doc.moveDown();
 
@@ -173,7 +173,7 @@ app.listen(PORT,()=>{
 
 console.log(
 
-"ADU Build Cottage Server Running"
+"ARI Cottage Server Running"
 
 );
 

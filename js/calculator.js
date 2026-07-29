@@ -1,5 +1,5 @@
 // ==========================================
-// ADU Build Cottage - Dynamic Invoice Calculator
+// ARI Cottage - Dynamic Invoice Calculator
 // ==========================================
 let basePrice = 24970; 
 let modelName = "1 BR 300sqft";

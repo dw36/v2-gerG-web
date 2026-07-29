@@ -1,5 +1,5 @@
 // ==========================================
-// ADU Build Cottage - Complete System Engine
+// ARI Cottage - Complete System Engine
 // ==========================================
 let catalog = {};
 let selectedModel = null;
