@@ -1,4 +1,4 @@
-# ADU Build Cottage
+# ARI HOMES
 
 ## Version 1 Features
 
@@ -25,7 +25,7 @@
 
 ✅ Gallery
 
-- Project Gallery
+- Gallery
 - Click Images
 - Responsive Layout
 
@@ -85,4 +85,4 @@ README.md
 ---
 
 Version 1
-ADU Build Cottage
+ARI HOMES
