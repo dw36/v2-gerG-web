@@ -205,7 +205,7 @@ Continue →
 
 <h3 class="fw-bold">
 
-Your Cottage Quote
+Your Home Quote
 
 </h3>
 
@@ -1888,7 +1888,7 @@ data-bs-target="#navbarNav">
 
 <h1 class="display-4 fw-bold">
 
-Your Cottage Quote
+Your Home Quote
 
 </h1>
 
