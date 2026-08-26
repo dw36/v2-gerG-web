@@ -123,7 +123,7 @@ $41,225
 
 <p>
 
-Two Bedrooms all inclusive
+Two Bedrooms All Furnished
 
 </p>
 
@@ -152,7 +152,7 @@ $59,995
 
 <p>
 
-Three Bedrooms all inclusive
+Three Bedrooms All Furnished
 
 </p>
 
@@ -549,7 +549,7 @@ class="card-img-top">
     $24,900 + Shipping $12,800</h2>
 
 <p> 
-    AirBnB Suite All Inclusive (Free Online Booking Support)</p>
+    AirBnB Suite All Furnished (Free Online Booking Support)</p>
 
 <a href="build.html" class="btn btn-outline-success"> 
     Customize </a>
@@ -575,7 +575,7 @@ class="card-img-top">
     $41,225 + Shipping $25,600 </h2>
 
 <p>
-    Two Bedrooms all inclusive </p>
+    Two Bedrooms All Furnished </p>
 
 <a
 href="build.html"
@@ -598,7 +598,7 @@ class="card-img-top">
 $59,995 + Shipping $38,400</h2>
 
 <p>
-Three Bedrooms all inclusive
+Three Bedrooms All Furnished
 </p>
 
 <a
@@ -616,7 +616,7 @@ Customize </a>
 <section class="bg-light py-5">
 <div class="container text-center">
 <h2>
-All Inclusive </h2>
+All Furnished </h2>
 
 <p>
 Furniture • Appliances • Fixtures • Decor
