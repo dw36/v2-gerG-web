@@ -54,7 +54,7 @@ data-bs-target="#navbarNav">
 
 <span class="badge bg-success fs-6 px-3 py-2 mb-3">
 
-🚚 Shipping Promotion Until Aug 10
+🚚 Shipping Promotion Until Sep 30
 
 </span>
 
@@ -305,7 +305,7 @@ Why Buyers Choose Us
 
 <li>✔ Fast delivery</li>
 
-<li>✔ Shipping promotion until Aug 10</li>
+<li>✔ Shipping promotion until Sep 30</li>
 
 <li>✔ Customize before ordering</li>
 
@@ -344,7 +344,7 @@ Premium Home Solutions
 
 <p>
 
-🚚 Shipping Promotion Until <strong>Aug 10</strong>
+🚚 Shipping Promotion Until <strong>Sep 30</strong>
 
 </p>
 
@@ -450,7 +450,7 @@ data-bs-target="#navbarNav">
 
 <span class="badge bg-success fs-6 px-3 py-2 mb-3">
 
-🚚 Shipping Promotion Until Aug 10
+🚚 Shipping Promotion Until Sep 30
 
 </span>
 
@@ -503,7 +503,7 @@ class="img-fluid rounded shadow">
 <h2>
 3 BR 900sqft — <strong>$59,995 Plus shipping</strong>
 </h2>
-Until Aug 10
+Until Sep 30
 </h2>
 
 <p class="mb-0">
@@ -647,7 +647,7 @@ Premium Home Solutions
 </p>
 
 <p>
-🚚 Shipping Promotion Until <strong>Aug 10</strong>
+🚚 Shipping Promotion Until <strong>Sep 30</strong>
 </p>
 </div>
 
@@ -2265,7 +2265,7 @@ $59,995
 
 ## Shipping Promotion
 
-Until Aug 10
+Until Sep 30
 
 ---
 
@@ -2625,7 +2625,7 @@ exports.handler = async (event, context) => {
   },
   "promotion": {
     "shippingTitle": "🚚 Shipping Promotion",
-    "shippingMessage": "Special Shipping Promotion Available Until Aug 10"
+    "shippingMessage": "Special Shipping Promotion Available Until Sep 30"
   },
   "models": [
     {
